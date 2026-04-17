@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+
+    <link rel="stylesheet" href="../../CSS/main.css">
+
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <div class="logo">CODELEARN</div>
+
+    <ul class="menu">
+        <li onclick="location.href='learning.html'">Học tập</li>
+        <li>Luyện tập</li>
+        <li>Sự kiện</li>
+        <li>Giới thiệu</li>
+        <li>Chia sẻ</li>
+    </ul>
+
+    <div class="auth">
+        <!-- CHUYỂN SANG PAGE -->
+        <a href="../account/login.html">Đăng nhập</a>
+        <a href="../account/register.html" class="btn">Đăng ký</a>
+    </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+
+    <!-- LEFT -->
+    <div class="hero-left">
+        <h1>
+            Nền tảng học lập trình <br>
+            trực tuyến hiện đại
+        </h1>
+
+        <div class="features">
+            <div><span>🚀</span> Học từ cơ bản đến nâng cao</div>
+            <div><span>🔥</span> Bài tập thực hành real-world</div>
+            <div><span>🏆</span> Thi đấu & bảng xếp hạng</div>
+            <div><span>💼</span> Hỗ trợ việc làm</div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-right">
+
+        <div class="login-card">
+            <h3>Học cùng với chúng tôi</h3>
+
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Tên tài khoản">
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Mật khẩu">
+            </div>
+
+            <a class="forgot">Quên mật khẩu?</a>
+
+            <button class="btn-login">Đăng nhập</button>
+
+            <div class="social-login">
+                <p>Hoặc tiếp tục với</p>
+
+                <div class="social-icons">
+                    <div class="icon"><i class="fab fa-google"></i></div>
+                    <div class="icon"><i class="fab fa-facebook-f"></i></div>
+                    <div class="icon"><i class="fab fa-github"></i></div>
+                </div>
+            </div>
+
+            <p class="switch">
+                Chưa có tài khoản?
+                <!-- CHUYỂN PAGE -->
+                <a href="../account/register.html">Đăng ký</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

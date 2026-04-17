@@ -1,0 +1,30 @@
+.auth-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 360px;
+}
+
+/* ===== BACK BUTTON ===== */
+.back-home {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 18px;
+    color: white;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 10px;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* hover đẹp */
+.back-home:hover {
+    background: linear-gradient(45deg, #00c6ff, #ff00cc);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #ff00cc;
+}

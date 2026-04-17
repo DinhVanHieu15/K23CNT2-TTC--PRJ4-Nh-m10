@@ -1,0 +1,69 @@
+/* ===== BANNER ===== */
+.banner {
+    margin: 30px auto;
+    width: 80%;
+    padding: 30px;
+    background: linear-gradient(45deg, #00c6ff, #ff00cc);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* FILTER */
+.filter {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    margin-top: 20px;
+}
+
+.filter input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px 0 0 6px;
+    border: none;
+}
+
+.filter button {
+    padding: 10px 15px;
+    border: none;
+    background: #ff00cc;
+    color: white;
+}
+
+/* COURSES GRID */
+.courses {
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* CARD */
+.course-card {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+    transition: 0.3s;
+}
+
+/* HOVER */
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px #ff00cc;
+}
+
+.course-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* PRICE */
+.price {
+    color: red;
+    font-weight: bold;
+}
+
+.free {
+    color: #4cc9f0;
+}

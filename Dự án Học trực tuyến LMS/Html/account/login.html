@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+
+    <link rel="stylesheet" href="../../Css/main.css">
+    <link rel="stylesheet" href="../../Css/login.css">
+
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="login-card">
+        <h2>Đăng nhập</h2>
+
+        <!-- USER -->
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Tên tài khoản">
+        </div>
+
+        <!-- PASS -->
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Mật khẩu">
+        </div>
+
+        <button class="btn-login" onclick="handleLogin()">Đăng nhập</button>
+
+        <!-- SOCIAL -->
+        <div class="social-login">
+            <p>Hoặc tiếp tục với</p>
+
+            <div class="social-icons">
+                <div class="icon"><i class="fab fa-google"></i></div>
+                <div class="icon"><i class="fab fa-facebook-f"></i></div>
+                <div class="icon"><i class="fab fa-github"></i></div>
+            </div>
+        </div>
+
+        <p class="switch">
+            Chưa có tài khoản?
+            <a href="register.html">Đăng ký</a>
+        </p>
+    </div>
+    <!-- BACK TO HOME -->
+<a href="../home/index.html" class="back-home">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+</div>
+ <script src="../../Js/auth.js"></script>
+</body>
+</html>

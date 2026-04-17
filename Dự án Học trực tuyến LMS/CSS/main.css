@@ -1,0 +1,273 @@
+/* =======================================================
+   GLOBAL
+======================================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    background: linear-gradient(135deg, #2c1a4d, #c33764);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/* =======================================================
+   NAVBAR
+======================================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 60px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 999;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.menu li {
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* underline animation */
+.menu li::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #4cc9f0;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+}
+
+.menu li:hover {
+    color: #4cc9f0;
+}
+
+.menu li:hover::after {
+    width: 100%;
+}
+
+/* BUTTON */
+.auth .btn {
+    background: linear-gradient(45deg, #ff4d6d, #ff758f);
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.auth .btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* =======================================================
+   HERO
+======================================================= */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 80px;
+}
+
+/* TEXT */
+.hero-left h1 {
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+/* FEATURES */
+.features div {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.features div:hover {
+    transform: translateX(15px) scale(1.03);
+    background: rgba(255,255,255,0.2);
+}
+
+
+/* =======================================================
+   LOGIN CARD (GLASS + ANIMATION)
+======================================================= */
+.hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.login-card {
+    background: rgba(255,255,255,0.05);
+    padding: 40px;
+    border-radius: 20px;
+    width: 330px;
+    backdrop-filter: blur(25px);
+    box-shadow: 0 15px 60px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+
+    /* animation */
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TITLE */
+.login-card h3 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* =======================================================
+   INPUT GROUP
+======================================================= */
+.input-group {
+    position: relative;
+    margin-top: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    color: #aaa;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 38px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: 0.3s;
+}
+
+/* hover + focus */
+.input-group input:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.input-group input:focus {
+    outline: none;
+    box-shadow: 0 0 12px #ff00cc;
+}
+
+
+/* =======================================================
+   LOGIN BUTTON
+======================================================= */
+.btn-login {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, #00c6ff, #ff00cc);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #ff00cc;
+}
+
+
+/* =======================================================
+   FORGOT PASSWORD
+======================================================= */
+.forgot {
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #4cc9f0;
+    cursor: pointer;
+}
+
+
+/* =======================================================
+   SOCIAL LOGIN
+======================================================= */
+.social-login {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.social-login p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.icon:hover {
+    transform: translateY(-5px) scale(1.1);
+    background: linear-gradient(45deg, #00c6ff, #ff00cc);
+    box-shadow: 0 0 20px #ff00cc;
+}
+
+
+/* =======================================================
+   SWITCH TEXT
+======================================================= */
+.switch {
+    text-align: center;
+    margin-top: 20px;
+}
