@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../../Css/main.css">
     <link rel="stylesheet" href="../../Css/register.css">
 
-    <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -18,28 +17,23 @@
     <div class="login-card">
         <h2>Đăng ký</h2>
 
-        <!-- USER -->
         <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Tên tài khoản">
+            <input type="text" id="reg_username" placeholder="Tên tài khoản">
         </div>
 
-        <!-- EMAIL -->
         <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email">
+            <input type="email" id="reg_email" placeholder="Email">
         </div>
 
-        <!-- PASS -->
         <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Mật khẩu">
+            <input type="password" id="reg_password" placeholder="Mật khẩu">
         </div>
 
         <button class="btn-login" onclick="handleRegister()">Đăng ký</button>
         
-
-        <!-- SOCIAL -->
         <div class="social-login">
             <p>Hoặc tiếp tục với</p>
 
@@ -57,11 +51,56 @@
     </div>
 
 </div>
-    <!-- BACK TO HOME -->
-<a href="../home/index.html" class="back-home">
+    <a href="../home/index.html" class="back-home">
     <i class="fas fa-arrow-left"></i>
 </a>
 
-<script src="../../Js/auth.js"></script>
+<script>
+    async function handleRegister() {
+        // 1. Lấy dữ liệu từ các ô input
+        const userVal = document.getElementById('reg_username').value;
+        const emailVal = document.getElementById('reg_email').value;
+        const passVal = document.getElementById('reg_password').value;
+
+        // 2. Kiểm tra xem người dùng có để trống ô nào không
+        if (!userVal || !emailVal || !passVal) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        try {
+            // 3. Gọi Fetch API gửi dữ liệu lên Backend (Cổng 5001)
+            const response = await fetch('http://127.0.0.1:5001/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: userVal,
+                    password: passVal,
+                    fullname: emailVal // Tạm gửi email vào trường fullname cho khớp Backend
+                })
+            });
+
+            // 4. Nhận kết quả từ Backend trả về
+            const data = await response.json();
+
+            if (data.status === "success") {
+                alert("Đăng ký thành công! Đang chuyển hướng đến trang Đăng nhập...");
+                
+                // Tự động chuyển thẳng sang trang login để người dùng đăng nhập
+                window.location.href = "login.html"; 
+            } else {
+                // Báo lỗi (VD: Tên đăng nhập đã tồn tại)
+                alert("Lỗi: " + data.message); 
+            }
+
+        } catch (error) {
+            console.error("Lỗi Fetch:", error);
+            alert("❌ Lỗi kết nối! Hãy chắc chắn bạn đã bật máy chủ Flask (lệnh: python app.py)!");
+        }
+    }
+</script>
+
 </body>
 </html>

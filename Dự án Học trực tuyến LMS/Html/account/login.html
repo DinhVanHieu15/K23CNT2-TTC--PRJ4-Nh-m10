@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../../Css/main.css">
     <link rel="stylesheet" href="../../Css/login.css">
 
-    <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -18,24 +17,20 @@
     <div class="login-card">
         <h2>Đăng nhập</h2>
 
-        <!-- USER -->
         <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Tên tài khoản">
+            <input type="text" id="username" placeholder="Tên tài khoản">
         </div>
 
-        <!-- PASS -->
         <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Mật khẩu">
+            <input type="password" id="password" placeholder="Mật khẩu">
         </div>
 
         <button class="btn-login" onclick="handleLogin()">Đăng nhập</button>
 
-        <!-- SOCIAL -->
         <div class="social-login">
             <p>Hoặc tiếp tục với</p>
-
             <div class="social-icons">
                 <div class="icon"><i class="fab fa-google"></i></div>
                 <div class="icon"><i class="fab fa-facebook-f"></i></div>
@@ -48,12 +43,60 @@
             <a href="register.html">Đăng ký</a>
         </p>
     </div>
-    <!-- BACK TO HOME -->
-<a href="../home/index.html" class="back-home">
-    <i class="fas fa-arrow-left"></i>
-</a>
+    
+    <a href="../home/index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+    </a>
 
 </div>
- <script src="../../Js/auth.js"></script>
+
+<script>
+    async function handleLogin() {
+        // 1. Lấy dữ liệu người dùng gõ vào ô input
+        const userVal = document.getElementById('username').value;
+        const passVal = document.getElementById('password').value;
+
+        // 2. Kiểm tra xem có để trống không
+        if (!userVal || !passVal) {
+            alert("Vui lòng nhập đầy đủ tài khoản và mật khẩu!");
+            return;
+        }
+
+        try {
+            // 3. Gọi Fetch API gửi dữ liệu lên Backend (Cổng 5001)
+            const response = await fetch('http://127.0.0.1:5001/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: userVal,
+                    password: passVal
+                })
+            });
+
+            // 4. Nhận kết quả từ Backend trả về
+            const data = await response.json();
+
+            if (data.status === "success") {
+                alert(data.message); // Báo đăng nhập thành công
+                
+                // Lưu thông tin user vào bộ nhớ trình duyệt để các trang khác nhận diện
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                // Chuyển hướng thẳng về trang chủ
+                window.location.href = "../home/index.html"; 
+            } else {
+                // Báo lỗi: Sai mật khẩu hoặc tài khoản không tồn tại
+                alert("Lỗi: " + data.message); 
+            }
+
+        } catch (error) {
+            console.error("Lỗi Fetch:", error);
+            alert("❌ Lỗi kết nối! Hãy chắc chắn bạn đã bật máy chủ bằng lệnh 'python app.py'!");
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -2,93 +2,139 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang chủ</title>
-
+    <title>Trang chủ - Hệ thống LMS</title>
     <link rel="stylesheet" href="../../CSS/main.css">
-
-    <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <div class="navbar">
-    <div class="logo">CODELEARN</div>
-
+    <div class="logo" onclick="location.href='index.html'">CODELEARN</div>
     <ul class="menu">
+        <li class="active" onclick="location.href='index.html'">Trang chủ</li>
         <li onclick="location.href='learning.html'">Học tập</li>
         <li>Luyện tập</li>
         <li>Sự kiện</li>
         <li>Giới thiệu</li>
-        <li>Chia sẻ</li>
     </ul>
-
-    <div class="auth">
-        <!-- CHUYỂN SANG PAGE -->
+    <div class="auth" id="nav-auth">
         <a href="../account/login.html">Đăng nhập</a>
         <a href="../account/register.html" class="btn">Đăng ký</a>
     </div>
 </div>
 
-<!-- ===== HERO ===== -->
 <div class="hero">
-
-    <!-- LEFT -->
     <div class="hero-left">
-        <h1>
-            Nền tảng học lập trình <br>
-            trực tuyến hiện đại
-        </h1>
-
+        <h1>Nền tảng học lập trình <br><span style="color: #00d2ff;">trực tuyến hiện đại</span></h1>
         <div class="features">
-            <div><span>🚀</span> Học từ cơ bản đến nâng cao</div>
-            <div><span>🔥</span> Bài tập thực hành real-world</div>
-            <div><span>🏆</span> Thi đấu & bảng xếp hạng</div>
-            <div><span>💼</span> Hỗ trợ việc làm</div>
+            <div><i class="fas fa-rocket" style="color: #ff4d6d;"></i> Học từ cơ bản đến nâng cao</div>
+            <div><i class="fas fa-fire" style="color: #ff9f43;"></i> Bài tập thực hành real-world</div>
+            <div><i class="fas fa-trophy" style="color: #f1c40f;"></i> Thi đấu & bảng xếp hạng</div>
+            <div><i class="fas fa-briefcase" style="color: #2ecc71;"></i> Hỗ trợ việc làm</div>
         </div>
     </div>
 
-    <!-- RIGHT -->
     <div class="hero-right">
-
-        <div class="login-card">
-            <h3>Học cùng với chúng tôi</h3>
-
+        <div class="login-card" id="home-login-card">
+            <h3>Học cùng chúng tôi</h3>
             <div class="input-group">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Tên tài khoản">
+                <input type="text" id="home_username" placeholder="Tên tài khoản">
             </div>
-
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Mật khẩu">
+                <input type="password" id="home_password" placeholder="Mật khẩu">
             </div>
-
-            <a class="forgot">Quên mật khẩu?</a>
-
-            <button class="btn-login">Đăng nhập</button>
-
-            <div class="social-login">
-                <p>Hoặc tiếp tục với</p>
-
-                <div class="social-icons">
-                    <div class="icon"><i class="fab fa-google"></i></div>
-                    <div class="icon"><i class="fab fa-facebook-f"></i></div>
-                    <div class="icon"><i class="fab fa-github"></i></div>
-                </div>
-            </div>
-
-            <p class="switch">
-                Chưa có tài khoản?
-                <!-- CHUYỂN PAGE -->
-                <a href="../account/register.html">Đăng ký</a>
+            <button class="btn-login" onclick="handleHomeLogin()">ĐĂNG NHẬP NGAY</button>
+            <p style="text-align:center; margin-top:20px; font-size:14px;">
+                Chưa có tài khoản? <a href="../account/register.html" style="color:#00d2ff; font-weight:bold;">Đăng ký</a>
             </p>
         </div>
-
+        
+        <div class="login-card hidden" id="home-welcome-card" style="text-align: center;">
+            <div style="font-size: 60px; color: #00d2ff; margin-bottom: 20px;">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h3>Chào mừng trở lại, <br><span id="display-user-name" style="color: #ff00cc;">Học viên</span>!</h3>
+            <p style="margin: 20px 0; color: #bdc3c7;">Hôm nay bạn muốn học thêm điều gì mới?</p>
+            <button class="btn-login" onclick="location.href='learning.html'">VÀO HỌC NGAY</button>
+            <a href="#" class="btn-logout" style="margin-top:20px; display:inline-block;" onclick="handleLogout()">Đăng xuất</a>
+        </div>
     </div>
-
 </div>
 
+<div class="courses-section">
+    <h2 style="text-align: center; margin-bottom: 40px;">Khóa học nổi bật</h2>
+    <div class="courses" id="course-list">
+        <p style="text-align: center; width: 100%; color: #bdc3c7;">Đang tải khóa học...</p>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://127.0.0.1:5001/api';
+
+    function checkAuth() {
+        const userStr = localStorage.getItem('user');
+        const navAuth = document.getElementById('nav-auth');
+        const loginCard = document.getElementById('home-login-card');
+        const welcomeCard = document.getElementById('home-welcome-card');
+        const displayName = document.getElementById('display-user-name');
+
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            navAuth.innerHTML = `<span class="user-name">Chào, ${user.username}</span><span style="color:rgba(255,255,255,0.2);margin:0 10px">|</span><a href="#" class="btn-logout" onclick="handleLogout()">Đăng xuất</a>`;
+            if(loginCard) loginCard.classList.add('hidden');
+            if(welcomeCard) {
+                welcomeCard.classList.remove('hidden');
+                if(displayName) displayName.innerText = user.username;
+            }
+        }
+    }
+
+    async function handleHomeLogin() {
+        const u = document.getElementById('home_username').value;
+        const p = document.getElementById('home_password').value;
+        if (!u || !p) { alert("Điền đủ thông tin Tuấn ơi!"); return; }
+
+        try {
+            const res = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p })
+            });
+            const data = await res.json();
+            if (data.status === "success") {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                window.location.reload(); 
+            } else { alert(data.message); }
+        } catch (err) { alert("Chưa bật app.py kìa!"); }
+    }
+
+    function handleLogout() { localStorage.removeItem('user'); window.location.reload(); }
+
+    async function fetchCourses() {
+        try {
+            const res = await fetch(`${API_URL}/courses`);
+            const data = await res.json();
+            const container = document.getElementById('course-list');
+            container.innerHTML = ''; 
+            if (data.status === "success") {
+                data.data.forEach(course => {
+                    const imgUrl = `https://placehold.jp/24/34495e/ffffff/250x140.png?text=${encodeURIComponent(course.title)}`;
+                    container.innerHTML += `
+                        <div class="course-card">
+                            <img src="${imgUrl}" alt="Course">
+                            <div class="category-tag">${course.category}</div>
+                            <h4>${course.title}</h4>
+                            <div class="price">${Number(course.price).toLocaleString('vi-VN')} đ</div>
+                            <button class="btn-enroll" onclick="location.href='learning.html'">Xem chi tiết</button>
+                        </div>`;
+                });
+            }
+        } catch (error) { console.error(error); }
+    }
+
+    window.onload = () => { checkAuth(); fetchCourses(); };
+</script>
 </body>
 </html>
