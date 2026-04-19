@@ -229,3 +229,50 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
     background: var(--primary); border: none; width: 45px; height: 45px;
     border-radius: 50%; color: white; cursor: pointer;
 }
+/* =======================================================
+   SOCIAL LOGIN ICONS (FIX LỖI XẾP DỌC)
+======================================================= */
+.social-login {
+    text-align: center;
+    margin-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.social-login p {
+    font-size: 14px;
+    color: #bdc3c7;
+    margin-bottom: 15px;
+}
+
+.social-icons {
+    display: flex;        /* Dàn hàng ngang */
+    justify-content: center;
+    gap: 20px;            /* Khoảng cách giữa các icon */
+}
+
+.icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.08); /* Nền mờ */
+    border-radius: 50%;   /* Tạo hình tròn */
+    display: flex;
+    align-items: center;  /* Căn giữa icon bên trong */
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 20px;
+}
+
+/* Hiệu ứng khi di chuột vào từng icon */
+.icon:hover {
+    transform: translateY(-5px);
+    background: var(--primary); /* Đổi sang màu xanh Cyan */
+    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+    border-color: transparent;
+}
+
+.icon i {
+    color: white;
+}

@@ -2,15 +2,60 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Học tập - Hệ thống LMS</title>
+    <title>Học tập - Hệ thống LMS Cyber</title>
 
     <link rel="stylesheet" href="../../CSS/main.css">
     <link rel="stylesheet" href="../../CSS/learning.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Tối ưu thêm một chút để khớp với giao diện Gradient của Tuấn */
+        /* =======================================================
+           PHẦN 1: CSS HEADER ĐỒNG BỘ (THEO MẪU EVENT)
+        ======================================================= */
+        :root {
+            --primary: #00d2ff;     /* Xanh Cyan */
+            --secondary: #ff00cc;   /* Hồng Neon */
+            --accent: #ff4d6d;      /* Đỏ hồng */
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 8%; height: 80px;
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 9999;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800; font-size: 26px; letter-spacing: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase; cursor: pointer;
+        }
+
+        .menu { display: flex; gap: 30px; list-style: none; }
+        .menu li {
+            font-size: 15px; font-weight: 600; color: #fff;
+            cursor: pointer; transition: 0.3s;
+        }
+        .menu li.active, .menu li:hover { color: var(--primary); }
+
+        .auth { display: flex; align-items: center; gap: 15px; }
+        .user-name { color: var(--primary); font-weight: bold; font-size: 15px; }
+        .separator { color: rgba(255, 255, 255, 0.2); }
+
+        .btn-logout-nav { 
+            background: transparent; color: var(--accent); border: 1px solid var(--accent);
+            padding: 7px 20px; border-radius: 12px; font-size: 13px; 
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-logout-nav:hover { background: var(--accent); color: white; }
+
+        /* =======================================================
+           PHẦN 2: GIỮ NGUYÊN CSS KHÓA HỌC CỦA TUẤN
+        ======================================================= */
         .course-card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
@@ -44,7 +89,7 @@
         .course-card .price {
             display: block;
             margin-top: 15px;
-            color: #2ecc71; /* Màu xanh lá cho giá tiền dễ nhìn */
+            color: #2ecc71;
             font-weight: 800;
             font-size: 1.2rem;
         }
@@ -59,22 +104,17 @@
 
 <body>
 
-<div class="navbar">
-    <div class="logo">CODELEARN</div>
-
-  <ul class="menu">
-    <li onclick="location.href='index.html'">Trang chủ</li>
-    <li onclick="location.href='learning.html'">Học tập</li>
-    <li>Luyện tập</li>
-    <li>Sự kiện</li>
-    <li>Giới thiệu</li>
-</ul>
-
-    <div class="auth" id="nav-auth">
-        <a href="../account/login.html">Đăng nhập</a>
-        <a href="../account/register.html" class="btn">Đăng ký</a>
-    </div>
-</div>
+<nav class="navbar">
+    <div class="logo" onclick="location.href='index.html'">CODELEARN</div>
+   <ul class="menu">
+        <li onclick="location.href='index.html'">Trang chủ</li>
+        <li onclick="location.href='learning.html'">Học tập</li>
+        <li onclick="location.href='training.html'">Luyện tập</li> 
+        <li onclick="location.href='event.html'">Sự kiện</li>
+        <li onclick="location.href='about.html'">Giới thiệu</li>
+    </ul>
+    <div class="auth" id="nav-auth"></div>
+</nav>
 
 <div class="banner">
     <h2>GIẢM GIÁ KHÓA HỌC</h2>
@@ -97,7 +137,7 @@
     const API_URL = 'http://127.0.0.1:5001/api';
     let allCourses = []; 
 
-    // 1. Kiểm tra trạng thái đăng nhập để đổi Navbar
+    // 1. Đồng bộ Header Auth (Chào Tuấn | Thoát)
     function checkAuth() {
         const userStr = localStorage.getItem('user');
         const navAuth = document.getElementById('nav-auth');
@@ -105,19 +145,19 @@
         if (userStr) {
             const user = JSON.parse(userStr);
             navAuth.innerHTML = `
-                <span style="margin-right: 15px; font-weight: bold; color: #00d2ff;">Chào, ${user.username}</span>
-                <a href="#" onclick="handleLogout()" style="color: #ff4757; cursor: pointer; font-weight:bold;">Đăng xuất</a>
+                <span class="user-name">Chào, ${user.username}</span>
+                <span class="separator">|</span>
+                <button class="btn-logout-nav" onclick="handleLogout()">Đăng xuất</button>
             `;
         }
     }
 
-    // Đăng xuất
     function handleLogout() {
         localStorage.removeItem('user');
         window.location.reload();
     }
 
-    // 2. Lấy dữ liệu khóa học từ SQL Server qua Flask
+    // 2. Giữ nguyên logic lấy dữ liệu khóa học
     async function fetchCourses() {
         try {
             const res = await fetch(`${API_URL}/courses`);
@@ -131,13 +171,14 @@
             }
         } catch (error) {
             console.error(error);
-            document.getElementById('course-list').innerHTML = "<p style='color:#ff4757; text-align:center; width:100%;'>❌ Lỗi: Không thể kết nối tới Server (Cổng 5001). Hãy chắc chắn bạn đã chạy python app.py</p>";
+            document.getElementById('course-list').innerHTML = "<p style='color:#ff4757; text-align:center; width:100%;'>❌ Lỗi Server. Hãy bật app.py Tuấn nhé!</p>";
         }
     }
 
-    // 3. Hiển thị khóa học lên giao diện
+    // 3. Render khóa học
     function renderCourses(coursesData) {
         const container = document.getElementById('course-list');
+        if(!container) return;
         container.innerHTML = ''; 
 
         if (coursesData.length === 0) {
@@ -146,12 +187,10 @@
         }
 
         coursesData.forEach(course => {
-            // Định dạng tiền tệ
             const priceDisplay = course.price == 0 
                 ? 'Miễn phí' 
                 : `${Number(course.price).toLocaleString('vi-VN')} đ`;
             
-            // Tạo ảnh Placeholder chứa tên khóa học (Sửa lỗi không hiện ảnh)
             const imgUrl = `https://placehold.jp/24/34495e/ffffff/250x140.png?text=${encodeURIComponent(course.title)}`;
 
             container.innerHTML += `
@@ -160,13 +199,13 @@
                     <div class="category-tag">${course.category}</div>
                     <h4>${course.title}</h4>
                     <span class="price">${priceDisplay}</span>
-                    <button class="btn" style="width:100%; margin-top:15px; background: linear-gradient(to right, #ff00cc, #3333ff); border:none; cursor:pointer;">Xem chi tiết</button>
+                    <button class="btn" style="width:100%; margin-top:15px; background: linear-gradient(to right, #ff00cc, #3333ff); border:none; cursor:pointer;" onclick="location.href='learning.html'">Xem chi tiết</button>
                 </div>
             `;
         });
     }
 
-    // 4. Tìm kiếm khóa học
+    // 4. Tìm kiếm
     function filterCourses() {
         const keyword = document.getElementById('searchInput').value.toLowerCase();
         const filtered = allCourses.filter(course => 
@@ -176,7 +215,6 @@
         renderCourses(filtered);
     }
 
-    // Khởi chạy khi tải trang
     window.onload = () => {
         checkAuth();
         fetchCourses();
